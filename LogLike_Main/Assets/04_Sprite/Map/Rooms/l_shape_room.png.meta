@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: 42fe080fd0cdf5c41957517518dc5834
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1415978199823300638
+    second: l_shape_room_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: l_shape_room_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 680
+        height: 340
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -307, y: 136}
+        - {x: -307.19128, y: 84.1588}
+        - {x: -332, y: 66}
+        - {x: -307.3363, y: 44.856186}
+        - {x: -307.74713, y: -66.47039}
+        - {x: -340, y: -89}
+        - {x: -307.90735, y: -109.88674}
+        - {x: -308, y: -135}
+        - {x: -204.89632, y: -135}
+        - {x: -176, y: -170}
+        - {x: -161.11063, y: -135}
+        - {x: 128.63858, y: -135}
+        - {x: 158, y: -164}
+        - {x: 183.82251, y: -135}
+        - {x: 307, y: -135}
+        - {x: 307.3014, y: -104.55864}
+        - {x: 335, y: -86}
+        - {x: 307.66235, y: -68.10391}
+        - {x: 308, y: -34}
+        - {x: 190.61633, y: -32.61902}
+        - {x: 153, y: -4}
+        - {x: 122.718475, y: -31.82022}
+        - {x: -32, y: -30}
+        - {x: -32.457428, y: 47.302948}
+        - {x: -4, y: 67}
+        - {x: -32.690613, y: 86.71234}
+        - {x: -33, y: 139}
+        - {x: -148.0538, y: 137.75394}
+        - {x: -172, y: 166}
+        - {x: -196.31012, y: 137.2313}
+        - {x: -310, y: 136}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e7c5d5545f695ce0800000000000000
+      internalID: -1415978199823300638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 8ae8a764125f0984d918983f2bcf2053
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      l_shape_room_0: -1415978199823300638
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
