@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    private List<Room> createdRooms;
+    public List<Room> CreatedRooms;
     private Dictionary<int, Room> cellToRoom = new();
 
     [Header("Offset Variables")]
@@ -28,17 +28,17 @@ public class RoomManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        createdRooms = new List<Room>();
+        CreatedRooms = new List<Room>();
     }
 
     public void SetupRooms(List<Cell> spawnedCells)
     {
-        for(int i = createdRooms.Count - 1; i >= 0; i--)
+        for(int i = CreatedRooms.Count - 1; i >= 0; i--)
         {
-            Destroy(createdRooms[i].gameObject);
+            Destroy(CreatedRooms[i].gameObject);
         }
 
-        createdRooms.Clear();
+        CreatedRooms.Clear();
 
         foreach(var currentCell in spawnedCells)
         {
@@ -54,7 +54,10 @@ public class RoomManager : MonoBehaviour
 
             cellToRoom[currentCell.cellList[0]] = spawnedRoom;
 
-            createdRooms.Add(spawnedRoom);
+            spawnedRoom.Index = currentCell.index;
+
+            CreatedRooms.Add(spawnedRoom);
+
         }
 
 

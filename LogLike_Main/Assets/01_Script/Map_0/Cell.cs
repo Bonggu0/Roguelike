@@ -34,6 +34,13 @@ public class Cell : MonoBehaviour
 
     public List<int> cellList = new List<int>();
 
+    public List<Door> doorList = new List<Door>();
+
+    //
+    public List<Enemy> enemyList = new List<Enemy>();
+    
+    public bool HaveMonster = true;
+    //
     public void SetSpecialRoomSprite(Sprite icon)
     {
         spriteRenderer.sprite = icon;
@@ -47,6 +54,9 @@ public class Cell : MonoBehaviour
     public void SetRoomType(RoomType newRoomType)
     {
         roomType = newRoomType;
+
+       
+
     }
 
     public void SetRoomShape(RoomShape newRoomShape)

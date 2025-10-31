@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Experimental.AI;
 
+
 public class MapGenerator : MonoBehaviour
 {
     private int[] floorPlan;
@@ -25,7 +26,7 @@ public class MapGenerator : MonoBehaviour
     private Queue<int> cellQueue;
     private List<Cell> spawnedCells;
 
-    public List<Cell> getSpawnedCells => spawnedCells;
+    public List<Cell> GetSpawnedCells => spawnedCells;
 
     private List<int> bigRoomIndexes;
 
@@ -95,7 +96,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void SetupDungeon() 
+    public void SetupDungeon() 
     {
         for(int i = 0; i < spawnedCells.Count; i++)
         {
@@ -142,6 +143,13 @@ public class MapGenerator : MonoBehaviour
         CleanEndRoomsList();
 
         SetupSpecialRooms();
+
+        foreach (var item in spawnedCells)
+        {
+            ConnectDoorToDoor();
+        }
+
+       
     }
 
     void CleanEndRoomsList()
@@ -354,12 +362,14 @@ public class MapGenerator : MonoBehaviour
             combinedY += y;
         }
 
-        if(largeRoomIndexes.Count == 4)
+        if (largeRoomIndexes.Count == 4)
         {
             Vector2 position = new Vector2(combinedX / 4 * cellSize + offset, -combinedY / 4 * cellSize - offset);
 
             newCell = Instantiate(cellPrefab, position, Quaternion.identity);
             newCell.SetRoomSprite(largeRoom);
+            newCell.index = largeRoomIndexes[0];
+
             newCell.SetRoomShape(RoomShape.TwoByTwo);
         }
 
@@ -379,6 +389,8 @@ public class MapGenerator : MonoBehaviour
                 Vector2 position = new Vector2(combinedX / 2 * cellSize, -combinedY / 2 * cellSize - offset);
                 newCell = Instantiate(cellPrefab, position, Quaternion.identity);
                 newCell.SetRoomSprite(verticalRoom);
+                newCell.index = largeRoomIndexes[0];
+
                 newCell.SetRoomShape(RoomShape.OneByTwo);
             }
             else if (largeRoomIndexes[0] + 1 == largeRoomIndexes[1] || largeRoomIndexes[0] - 1 == largeRoomIndexes[1])
@@ -386,6 +398,8 @@ public class MapGenerator : MonoBehaviour
                 Vector2 position = new Vector2(combinedX / 2 * cellSize + offset, -combinedY / 2 * cellSize);
                 newCell = Instantiate(cellPrefab, position, Quaternion.identity);
                 newCell.SetRoomSprite(horizontalRoom);
+                newCell.index = largeRoomIndexes[0];
+
                 newCell.SetRoomShape(RoomShape.TwoByOne);
             }
         }
@@ -394,4 +408,79 @@ public class MapGenerator : MonoBehaviour
         newCell.cellList.Sort();
         spawnedCells.Add(newCell);
     }
+
+    private void ConnectDoorToDoor()
+    {
+        foreach (var cell in spawnedCells)
+        {
+            foreach (var door in cell.doorList)
+            {
+                int currentIndex = door.CurrentIndex;
+
+                int nextIndex = currentIndex + GetOffset(door.Direction);
+
+                var nextCell = spawnedCells.FirstOrDefault(c => c.index == nextIndex);
+                if (nextCell == null)
+                    continue;
+
+                EdgeDirection oppositeDir = GetOppositeDir(door.Direction);
+
+                var oppositeDoor = nextCell.doorList
+                 .FirstOrDefault(d => d.Direction == oppositeDir && d.NextDoor == null);
+
+                if (oppositeDoor == null)
+                    continue;
+
+                door.NextDoor = oppositeDoor;
+                oppositeDoor.NextDoor = door;
+
+                door.NextCellIndex = nextIndex;
+                oppositeDoor.NextCellIndex = currentIndex;
+
+            }
+
+        }
+
+    }
+
+    private int GetOffset(EdgeDirection direction)
+    {
+        switch (direction)
+        {
+            case EdgeDirection.Up:
+                return -10;
+
+            case EdgeDirection.Down:
+                return 10;
+
+            case EdgeDirection.Right:
+                return 1;
+
+            case EdgeDirection.Left:
+                return -1;
+        }
+
+        return 0;
+    }
+
+    private EdgeDirection GetOppositeDir(EdgeDirection direction)
+    {
+        switch (direction)
+        {
+            case EdgeDirection.Up:
+                return EdgeDirection.Down;
+
+            case EdgeDirection.Down:
+                return EdgeDirection.Up;
+
+            case EdgeDirection.Right:
+                return EdgeDirection.Left;
+
+            case EdgeDirection.Left:
+                return EdgeDirection.Right;
+        }
+
+        return 0;
+    }
+
 }

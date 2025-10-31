@@ -16,6 +16,9 @@ public class Room : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
 
+    public int Index = 0;
+
+    public int RoomShapeIndex = 0;
 
     public void SetupRoom(Cell currentCell, RoomScriptable room)
     {
@@ -24,9 +27,7 @@ public class Room : MonoBehaviour
         if (currentCell.roomType == RoomType.Secret) return;
 
         var floorplan = MapGenerator.Instance.GetFloorPlan;
-        var cellList = MapGenerator.Instance.getSpawnedCells;
-
-
+        var cellList = MapGenerator.Instance.GetSpawnedCells;
 
         switch (currentCell.roomShape)
         {
@@ -113,6 +114,8 @@ public class Room : MonoBehaviour
         var cellC = cell.cellList[2];
         var cellD = cell.cellList[3];
 
+        Debug.Log(cell.cellList[0]);
+
         TryPlaceDoor(cellA, new Vector2(-5.3125f, 4.5f), EdgeDirection.Up, floorplan, cellList, cell);
         TryPlaceDoor(cellB, new Vector2(5.3125f, 4.5f), EdgeDirection.Up, floorplan, cellList, cell);
 
@@ -144,6 +147,8 @@ public class Room : MonoBehaviour
             TryPlaceDoor(cellC, new Vector2(-5.3125f, -4.5f), EdgeDirection.Down, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(-1f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(-9.75f, -2.6125f), EdgeDirection.Left, floorplan, cellList, cell);
+
+            RoomShapeIndex = 1;
         }
         else if (cellA + 1 == cellB && cellB + 10 == cellC)
         {
@@ -157,6 +162,8 @@ public class Room : MonoBehaviour
             TryPlaceDoor(cellC, new Vector2(5.3125f, -4.5f), EdgeDirection.Down, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(9.75f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(1, -2.6125f), EdgeDirection.Left, floorplan, cellList, cell);
+
+            RoomShapeIndex = 2;
         }
         else if (cellA + 10 == cellB)
         {
@@ -170,6 +177,8 @@ public class Room : MonoBehaviour
             TryPlaceDoor(cellC, new Vector2(5.3125f, -1), EdgeDirection.Up, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(5.3125f, -4.5f), EdgeDirection.Down, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(9.75f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
+
+            RoomShapeIndex = 3;
         }
         else if (cellA + 10 == cellC)
         {
@@ -183,6 +192,8 @@ public class Room : MonoBehaviour
 
             TryPlaceDoor(cellC, new Vector2(5.3125f, -4.5f), EdgeDirection.Down, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(9.75f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
+
+            RoomShapeIndex = 4;
         }
     }
 
@@ -203,36 +214,32 @@ public class Room : MonoBehaviour
         door.transform.position = (Vector2)transform.position + positionOffset;
 
         door.Direction = direction;
+        door.CurrentIndex = fromIndex;
+        currentCell.doorList.Add(door);
 
-        SetupDoor(door, direction, currentCell.roomType == RoomType.Regular ? foundCell.roomType : currentCell.roomType);
-
-
+        SetupDoor(door, direction, currentCell.roomType == RoomType.Regular ? foundCell.roomType : currentCell.roomType, currentCell.index);
     }
 
 
 
-    private void SetupDoor(Door door, EdgeDirection direction, RoomType roomType)
+    private void SetupDoor(Door door, EdgeDirection direction, RoomType roomType,int bigRoomIndex)
     {
         var doorTypes = GetDoorOptions(roomType);
 
         switch (direction)
         {
             case EdgeDirection.Up:
-                door.SetDoorObject(doorTypes.upDoor, direction);
+                door.SetDoorObject(doorTypes.upDoor, direction, bigRoomIndex);
                 break;
-
             case EdgeDirection.Down:
-                door.SetDoorObject(doorTypes.downDoor, direction);
+                door.SetDoorObject(doorTypes.downDoor, direction, bigRoomIndex);
                 break;
-
             case EdgeDirection.Left:
-                door.SetDoorObject(doorTypes.leftDoor, direction);
+                door.SetDoorObject(doorTypes.leftDoor, direction, bigRoomIndex);
                 break;
-
             case EdgeDirection.Right:
-                door.SetDoorObject(doorTypes.rightDoor, direction);
+                door.SetDoorObject(doorTypes.rightDoor, direction, bigRoomIndex);
                 break;
-
             default:
                 break;
         }
@@ -249,17 +256,14 @@ public class Room : MonoBehaviour
         {
             case EdgeDirection.Up:
                 return -10;
-
             case EdgeDirection.Down:
                 return 10;
-
             case EdgeDirection.Right:
                 return 1;
-
             case EdgeDirection.Left:
                 return -1;
         }
-
         return 0;
     }
+   
 }
