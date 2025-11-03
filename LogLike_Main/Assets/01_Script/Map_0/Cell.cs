@@ -23,6 +23,9 @@ public enum RoomShape
 
 public class Cell : MonoBehaviour
 {
+    [SerializeField]
+    public CellScriptatble CellData;
+
     public RoomType roomType;
     public RoomShape roomShape;
 
@@ -38,9 +41,12 @@ public class Cell : MonoBehaviour
 
     //
     public List<Enemy> enemyList = new List<Enemy>();
-    
+
     public bool HaveMonster = true;
     //
+
+
+
     public void SetSpecialRoomSprite(Sprite icon)
     {
         spriteRenderer.sprite = icon;
@@ -55,7 +61,7 @@ public class Cell : MonoBehaviour
     {
         roomType = newRoomType;
 
-       
+
 
     }
 
@@ -69,11 +75,11 @@ public class Cell : MonoBehaviour
         connectedCells.Sort();
         index = connectedCells[0];
 
-        if(connectedCells.Contains(index + 1) && connectedCells.Contains(index + 10))
+        if (connectedCells.Contains(index + 1) && connectedCells.Contains(index + 10))
         {
             ApplyRotation(-90);
-        }    
-        else if(connectedCells.Contains(index + 1) && connectedCells.Contains(index + 11))
+        }
+        else if (connectedCells.Contains(index + 1) && connectedCells.Contains(index + 11))
         {
             ApplyRotation(180);
         }
@@ -86,5 +92,18 @@ public class Cell : MonoBehaviour
     public void ApplyRotation(float angle)
     {
         transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void RemoveEnemy(Enemy enemy)
+    {
+        enemyList.Remove(enemy);
+    }
+
+    public void SetEvent()
+    {
+        foreach (var enemy in enemyList)
+        {
+            enemy.EnemyDead += RemoveEnemy;
+        }
     }
 }

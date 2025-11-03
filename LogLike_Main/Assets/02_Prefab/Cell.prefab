@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c28a65da081419f4eadd32524325e0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CellData: {fileID: 11400000, guid: 8c812112cd39f96438f208b9a8eb02e0, type: 2}
   roomType: 0
   roomShape: 0
   index: 0
@@ -144,8 +145,7 @@ MonoBehaviour:
   roomSprite: {fileID: 5689360970581527786}
   cellList: 
   doorList: []
-  enemyList:
-  - {fileID: 0}
+  enemyList: []
   HaveMonster: 1
 --- !u!212 &5689360970581527786
 SpriteRenderer:

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
@@ -24,8 +25,17 @@ public class RoomManager : MonoBehaviour
     public static RoomManager instance;
 
 
+    private void OnEnable()
+    {
+        BattleManager.OpenDoorAction += OpenDoor;
+    }
 
-    private void Awake()
+    private void OnDisable()
+    {
+        BattleManager.OpenDoorAction -= OpenDoor;
+    }
+
+    public void Initialization()
     {
         instance = this;
         CreatedRooms = new List<Room>();
@@ -33,14 +43,14 @@ public class RoomManager : MonoBehaviour
 
     public void SetupRooms(List<Cell> spawnedCells)
     {
-        for(int i = CreatedRooms.Count - 1; i >= 0; i--)
+        for (int i = CreatedRooms.Count - 1; i >= 0; i--)
         {
             Destroy(CreatedRooms[i].gameObject);
         }
 
         CreatedRooms.Clear();
 
-        foreach(var currentCell in spawnedCells)
+        foreach (var currentCell in spawnedCells)
         {
             var foundRoom = rooms.FirstOrDefault(x => x.roomShape == currentCell.roomShape && x.roomType == currentCell.roomType && DoesTileMatchCell(x.occupiedTiles, currentCell));
 
@@ -65,13 +75,13 @@ public class RoomManager : MonoBehaviour
 
     private bool DoesTileMatchCell(int[] occupiedTiles, Cell cell)
     {
-        if(occupiedTiles.Length != cell.cellList.Count)
+        if (occupiedTiles.Length != cell.cellList.Count)
             return false;
 
         int minIndex = cell.cellList.Min();
         List<int> normalizedCell = new List<int>();
 
-        foreach(int index in cell.cellList)
+        foreach (int index in cell.cellList)
         {
             int dx = (index % 10) - (minIndex % 10);
             int dy = (index / 10) - (minIndex / 10);
@@ -85,7 +95,34 @@ public class RoomManager : MonoBehaviour
 
         return normalizedCell.SequenceEqual(sortedOccupied);
     }
-   //문열고 닫는 관련 코드 작성 하기
+    //문열고 닫는 관련 코드 작성 하기
 
+    public void ActivateRoom(Cell cell, bool isBattle)
+    {
+        foreach (var door in cell.doorList)
+        {
+            door.CloseDoor();
+        }
 
+        if (cell.HaveMonster == true)
+        {
+            isBattle = true;
+
+            foreach (var door in cell.doorList)
+            {
+                door.CloseDoor();
+            }
+        }
+        else isBattle = false;
+
+    }
+
+    public void OpenDoor(Cell cell)
+    {
+
+        foreach (var door in cell.doorList)
+        {
+            door.OpenDoor();
+        }
+    }
 }

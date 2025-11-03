@@ -60,6 +60,12 @@ public class Room : MonoBehaviour
                 break;
         }
 
+        currentCell.enemyList = new List<Enemy>();
+        Enemy enemy = Instantiate(currentCell.CellData.EnemyList[0], this.transform);
+
+        currentCell.enemyList.Add(enemy);
+
+        currentCell.SetEvent();
     }
     private void SetCollider()
     {
@@ -222,7 +228,7 @@ public class Room : MonoBehaviour
 
 
 
-    private void SetupDoor(Door door, EdgeDirection direction, RoomType roomType,int bigRoomIndex)
+    private void SetupDoor(Door door, EdgeDirection direction, RoomType roomType, int bigRoomIndex)
     {
         var doorTypes = GetDoorOptions(roomType);
 
@@ -265,5 +271,5 @@ public class Room : MonoBehaviour
         }
         return 0;
     }
-   
+
 }

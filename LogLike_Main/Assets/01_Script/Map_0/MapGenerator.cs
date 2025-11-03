@@ -74,8 +74,8 @@ public class MapGenerator : MonoBehaviour
         new int[] {-1, -10, -11}
     };
 
-    // Start is called before the first frame update
-    void Start()
+
+    public void Initialization()
     {
         Instance = this;
 
@@ -87,7 +87,6 @@ public class MapGenerator : MonoBehaviour
         SetupDungeon();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -114,6 +113,8 @@ public class MapGenerator : MonoBehaviour
         VisitCell(45);
 
         GenerateDungeon();
+
+       
     }
 
     void GenerateDungeon()
@@ -149,7 +150,7 @@ public class MapGenerator : MonoBehaviour
             ConnectDoorToDoor();
         }
 
-       
+        
     }
 
     void CleanEndRoomsList()
@@ -179,6 +180,7 @@ public class MapGenerator : MonoBehaviour
         SpawnRoom(secretRoomIndex);
 
         UpdateSpecialRoomVisuals();
+
         RoomManager.instance.SetupRooms(spawnedCells);
     }
 

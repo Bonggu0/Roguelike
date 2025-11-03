@@ -62,11 +62,9 @@ public class Door : MonoBehaviour
     {
         SpriteRenderer.color = Color.black;
         col.isTrigger = true;
-
-
     }
 
-    //end battel,etc...
+    //end battel,boom,etc...
     public void OpenDoor()
     {
         SpriteRenderer.color = Color.white;

@@ -1,4 +1,5 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,49 +9,40 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private  CameraMovement camareMove;
+    private CameraMovement camareMove;
     [SerializeField]
     private RoomManager roomManager;
 
-    BattleManager battleManager;
+    private BattleManager battleManager;
 
-    private int currentCelliIndex = 45;
+    private int currentCellIndex = 45;
 
-    public Room curRoom;
+    private Cell curCell;
+    private Room curRoom;
+
 
     //레벨 정보 나중에 넣기
 
     void Awake()
     {
         battleManager = new BattleManager();
+        roomManager.Initialization();
+        mapGenerator.Initialization();
     }
 
 
     void Update()
     {
-        
+        camareMove.UpdateCamera(curRoom);
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             battleManager.EndBattle();
         }
 
-        if (battleManager.IsBattle)
-        {
-            battleManager.UpdateBattle();
-            Debug.Log("battle ing");
-        }
-        else
-        {
-            Debug.Log("battle end");
-            Cell curCell = mapGenerator.GetSpawnedCells.FirstOrDefault(c => c.index == currentCelliIndex);
+        if (battleManager.IsBattle) battleManager.UpdateBattle();
+        
 
-            foreach (var door in curCell.doorList)
-            {
-                door.OpenDoor();
-            }
-        }
-
-        camareMove.UpdateCamera(curRoom);
 
     }
 
@@ -64,23 +56,21 @@ public class GameManager : MonoBehaviour
         Door.OnPlayerMovedThroughDoor -= MoveRoom;
     }
 
-    private void MoveRoom(int currenIndex)
+    private void Initiate()
     {
-        currentCelliIndex = currenIndex;
+        MapGenerate();
+    }
+    public void MoveRoom(int index)
+    {
+        currentCellIndex = index;
 
-        Cell curCell = mapGenerator.GetSpawnedCells.FirstOrDefault(c => c.index == currentCelliIndex);
+        Cell cell = mapGenerator.GetSpawnedCells.FirstOrDefault(c => c.index == currentCellIndex);
 
-        foreach (var door in curCell.doorList)
-        {
-            door.CloseDoor();
-        }
+        //curCell = cell;
 
-        if(curCell.HaveMonster == true)
-        {
-            battleManager.StartBattle(curCell);
-        }
+        curRoom = roomManager.CreatedRooms.FirstOrDefault(c => c.Index == currentCellIndex);
 
-        curRoom = roomManager.CreatedRooms.FirstOrDefault(c => c.Index == currentCelliIndex);
+        roomManager.ActivateRoom(cell, battleManager.CheckEnemy(cell));
     }
 
     private void EnterDungeon()
