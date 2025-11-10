@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (battleManager.IsBattle) battleManager.UpdateBattle();
-        
+
 
 
     }
@@ -66,11 +66,16 @@ public class GameManager : MonoBehaviour
 
         Cell cell = mapGenerator.GetSpawnedCells.FirstOrDefault(c => c.index == currentCellIndex);
 
-        //curCell = cell;
-
         curRoom = roomManager.CreatedRooms.FirstOrDefault(c => c.Index == currentCellIndex);
 
-        roomManager.ActivateRoom(cell, battleManager.CheckEnemy(cell));
+        if (cell.enemyList.Count == 0)
+        {
+            return;
+        }
+        else
+        {
+            roomManager.ActivateRoom(cell, battleManager.CheckEnemy(cell));
+        }
     }
 
     private void EnterDungeon()

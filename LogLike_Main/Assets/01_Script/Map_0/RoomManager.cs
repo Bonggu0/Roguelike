@@ -69,8 +69,6 @@ public class RoomManager : MonoBehaviour
             CreatedRooms.Add(spawnedRoom);
 
         }
-
-
     }
 
     private bool DoesTileMatchCell(int[] occupiedTiles, Cell cell)

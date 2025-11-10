@@ -45,6 +45,8 @@ public class Cell : MonoBehaviour
     public bool HaveMonster = true;
     //
 
+    //public void SetRoomType() =>
+
 
 
     public void SetSpecialRoomSprite(Sprite icon)
@@ -60,9 +62,6 @@ public class Cell : MonoBehaviour
     public void SetRoomType(RoomType newRoomType)
     {
         roomType = newRoomType;
-
-
-
     }
 
     public void SetRoomShape(RoomShape newRoomShape)

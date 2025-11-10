@@ -18,7 +18,6 @@ public class Room : MonoBehaviour
 
     public int Index = 0;
 
-    public int RoomShapeIndex = 0;
 
     public void SetupRoom(Cell currentCell, RoomScriptable room)
     {
@@ -70,10 +69,10 @@ public class Room : MonoBehaviour
     private void SetCollider()
     {
         var sprite = GetComponent<SpriteRenderer>().sprite;
-        var polygonCollider2D = GetComponent<EdgeCollider2D>();
+        var edgeCollider = GetComponent<EdgeCollider2D>();
         var pointsList = new List<Vector2>();
         sprite.GetPhysicsShape(0, pointsList);
-        polygonCollider2D.points = pointsList.ToArray();
+        edgeCollider.points = pointsList.ToArray();
     }
     public void SetupOneByOne(Cell cell, int[] floorplan, List<Cell> cellList)
     {
@@ -154,7 +153,6 @@ public class Room : MonoBehaviour
             TryPlaceDoor(cellC, new Vector2(-1f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(-9.75f, -2.6125f), EdgeDirection.Left, floorplan, cellList, cell);
 
-            RoomShapeIndex = 1;
         }
         else if (cellA + 1 == cellB && cellB + 10 == cellC)
         {
@@ -169,7 +167,6 @@ public class Room : MonoBehaviour
             TryPlaceDoor(cellC, new Vector2(9.75f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(1, -2.6125f), EdgeDirection.Left, floorplan, cellList, cell);
 
-            RoomShapeIndex = 2;
         }
         else if (cellA + 10 == cellB)
         {
@@ -184,7 +181,6 @@ public class Room : MonoBehaviour
             TryPlaceDoor(cellC, new Vector2(5.3125f, -4.5f), EdgeDirection.Down, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(9.75f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
 
-            RoomShapeIndex = 3;
         }
         else if (cellA + 10 == cellC)
         {
@@ -199,7 +195,6 @@ public class Room : MonoBehaviour
             TryPlaceDoor(cellC, new Vector2(5.3125f, -4.5f), EdgeDirection.Down, floorplan, cellList, cell);
             TryPlaceDoor(cellC, new Vector2(9.75f, -2.6375f), EdgeDirection.Right, floorplan, cellList, cell);
 
-            RoomShapeIndex = 4;
         }
     }
 
